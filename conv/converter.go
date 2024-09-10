@@ -11,7 +11,7 @@ import (
 )
 
 func RGBtoAnsi(r, g, b int) string {
-	return "\x1b[38;2;" + strconv.FormatInt(int64(r), 10) + ";" + strconv.FormatInt(int64(g), 10) + ";" + strconv.FormatInt(int64(b), 10) + "m"
+	return cnsts.ANSI_FOREGROUND + strconv.FormatInt(int64(r), 10) + ";" + strconv.FormatInt(int64(g), 10) + ";" + strconv.FormatInt(int64(b), 10) + "m"
 }
 
 func Convert(img image.Image) string {

@@ -8,6 +8,7 @@ const (
 	TOP_TRACKS_URL    = "https://api.spotify.com/v1/me/top/tracks?time_range=short_term"
 	TOP_ARTISTS_URL   = "https://api.spotify.com/v1/me/top/artists?time_range=short_term"
 	ANSI_RESET        = "\x1b[0m"
+	ANSI_FOREGROUND   = "\x1b[38;2;"
 	CHAR              = "█"
 	FONT_ASPECT_RATIO = 0.46
 	DIM               = 44
