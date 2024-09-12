@@ -60,17 +60,12 @@ func WriteOutputToFile(ansiImage string, trackText string) string {
 	outputFile := cnsts.OUTPUT_FILE_NAME
 	basePath := BasePath()
 
-	file, err := os.Create(basePath + "\\" + outputFile)
+	outputFile = filepath.Join(basePath, outputFile)
+
+	file, err := os.Create(outputFile)
 	if err != nil {
-		file, err = os.Create(basePath + "/" + outputFile)
-		if err != nil {
-			os.Stderr.WriteString("Cannot create output file\n")
-			os.Exit(1)
-		} else {
-			outputFile = basePath + "/" + outputFile
-		}
-	} else {
-		outputFile = basePath + "\\" + outputFile
+		os.Stderr.WriteString("Cannot create output file\n")
+		os.Exit(1)
 	}
 
 	defer file.Close()
@@ -88,17 +83,12 @@ func OutputFileName() string {
 	outputFile := cnsts.OUTPUT_FILE_NAME
 	basePath := BasePath()
 
-	_, err := os.ReadFile(basePath + "\\" + outputFile)
+	outputFile = filepath.Join(basePath, outputFile)
+
+	_, err := os.ReadFile(outputFile)
 	if err != nil {
-		_, err = os.ReadFile(basePath + "/" + outputFile)
-		if err != nil {
-			os.Stderr.WriteString("Cannot open output file\n")
-			os.Exit(1)
-		} else {
-			outputFile = basePath + "/" + outputFile
-		}
-	} else {
-		outputFile = basePath + "\\" + outputFile
+		os.Stderr.WriteString("Cannot open output file\n")
+		os.Exit(1)
 	}
 
 	return outputFile
