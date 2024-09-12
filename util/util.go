@@ -22,7 +22,7 @@ func BasePath() string {
 		EndWithErr("cannot get current working directory")
 	}
 
-	if filepath.Base(execPath) == "go.exe" || filepath.Base(execPath) == "go" && strings.HasPrefix(cwd, os.TempDir()) {
+	if !strings.HasPrefix(execDir, os.TempDir()) {
 		return execDir
 	}
 
@@ -75,18 +75,30 @@ func WriteOutputToFile(ansiImage string, trackText string) string {
 
 	defer file.Close()
 
-	if ansiImage == "" || trackText == "" {
-		_, err = file.WriteString("")
+	_, err = file.WriteString(ansiImage + "\n" + formatTrackText(trackText) + "\n\n")
+	if err != nil {
+		os.Stderr.WriteString("Cannot write to file\n")
+		os.Exit(1)
+	}
+
+	return outputFile
+}
+
+func OutputFileName() string {
+	outputFile := cnsts.OUTPUT_FILE_NAME
+	basePath := BasePath()
+
+	_, err := os.ReadFile(basePath + "\\" + outputFile)
+	if err != nil {
+		_, err = os.ReadFile(basePath + "/" + outputFile)
 		if err != nil {
-			os.Stderr.WriteString("Cannot write to file\n")
+			os.Stderr.WriteString("Cannot open output file\n")
 			os.Exit(1)
+		} else {
+			outputFile = basePath + "/" + outputFile
 		}
 	} else {
-		_, err = file.WriteString(ansiImage + "\n" + formatTrackText(trackText) + "\n\n")
-		if err != nil {
-			os.Stderr.WriteString("Cannot write to file\n")
-			os.Exit(1)
-		}
+		outputFile = basePath + "\\" + outputFile
 	}
 
 	return outputFile

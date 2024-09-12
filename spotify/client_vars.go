@@ -4,4 +4,4 @@ import (
 	"fetch-spotify-cli/env"
 )
 
-var SpotifyVars = env.LoadEnvVars()
+var SpotifyVars = env.LoadSpotifyEnvVars()

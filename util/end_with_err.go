@@ -7,8 +7,6 @@ import (
 func EndWithErr(errorMessage string) {
 	os.Stderr.WriteString("Error: " + errorMessage + "\n")
 
-	outputFile := WriteOutputToFile("", "")
-
-	os.Stdout.WriteString(outputFile)
+	os.Stdout.WriteString(OutputFileName())
 	os.Exit(1)
 }
